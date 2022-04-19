@@ -14,7 +14,8 @@ let specificTypes = {
             return false
         return true
     },
-    basisPoints: (val) => general.positiveInteger(val) && val <= 10000,
+    basisPoints: (val) => general.integer(val) && val <= 10000,
+    basisPointsOnlyPositive: (val) => general.positiveInteger(val) && val <= 10000,
     username: (val) => {
         if (!general.string(val) || val.length < 3 || val.length > 16)
             return false
@@ -50,7 +51,7 @@ let operations = {
         author: specificTypes.username,
         permlink: general.string,
         max_accepted_payout: specificTypes.asset,
-        percent_hbd: specificTypes.basisPoints,
+        percent_hbd: specificTypes.basisPointsOnlyPositive,
         allow_votes: general.bool,
         allow_curation_rewards: general.bool,
         extensions: general.array

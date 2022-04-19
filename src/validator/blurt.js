@@ -16,7 +16,7 @@ let specificTypes = {
             return false
         return true
     },
-    basisPoints: hive.specificTypes.basisPoints,
+    basisPointsOnlyPositive: hive.specificTypes.basisPointsOnlyPositive,
     username: hive.specificTypes.username,
 }
 
@@ -33,7 +33,12 @@ let operations = {
         extensions: general.array
     },
     custom_json: hive.operations.custom_json,
-    vote: hive.operations.vote
+    vote: {
+        voter: specificTypes.username,
+        author: specificTypes.username,
+        permlink: general.string,
+        weight: specificTypes.basisPointsOnlyPositive
+    }
 }
 
 module.exports = {
