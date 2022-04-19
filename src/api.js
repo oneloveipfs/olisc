@@ -35,13 +35,13 @@ let api = {
         {
             verb: 'post',
             method: '/new',
-            fields: ['op','opNetwork'],
+            fields: ['op','opNetwork','scheduled'],
             action: actions.new
         },
         {
             verb: 'put',
             method: '/edit',
-            fields: ['id','op'],
+            fields: ['id','op','scheduled'],
             action: actions.edit
         },
         {
