@@ -14,7 +14,24 @@ let specificTypes = {
             return false
         return true
     },
-    basisPoints: (val) => general.positiveInteger(val) && val <= 10000
+    basisPoints: (val) => general.positiveInteger(val) && val <= 10000,
+    username: (val) => {
+        if (!general.string(val) || val.length < 3 || val.length > 16)
+            return false
+        let ref = val.split(".")
+        for (let i = 0, len = ref.length; i < len; i++)
+            if (!/^[a-z]/.test(ref[i]) || !/^[a-z0-9-]*$/.test(ref[i]) || !/--/.test(ref[i]) || !/[a-z0-9]$/.test(ref[i]) || ref[i].length < 3)
+                return false
+        return true
+    },
+    arrayOfUsernames: (val) => {
+        if (!generalValidator.arrayOfStrings(val))
+            return false
+        for (let i in val)
+            if (!specificTypes.username(val[i]))
+                return false
+        return true
+    }
 }
 
 // some supported operations to validate
@@ -23,14 +40,14 @@ let operations = {
     comment: {
         parent_author: general.string,
         parent_permlink: general.string,
-        author: general.string,
+        author: specificTypes.username,
         permlink: general.string,
         title: general.string,
         body: general.string,
         json_metadata: general.jsonString
     },
     comment_options: {
-        author: general.string,
+        author: specificTypes.username,
         permlink: general.string,
         max_accepted_payout: specificTypes.asset,
         percent_hbd: specificTypes.basisPoints,
@@ -39,14 +56,14 @@ let operations = {
         extensions: general.array
     },
     custom_json: {
-        required_auths: general.arrayOfStrings,
-        required_posting_auths: general.arrayOfStrings,
+        required_auths: specificTypes.arrayOfUsernames,
+        required_posting_auths: specificTypes.arrayOfUsernames,
         id: general.string,
         json: general.jsonString
     },
     vote: {
-        voter: general.string,
-        author: general.string,
+        voter: specificTypes.username,
+        author: specificTypes.username,
         permlink: general.string,
         weight: specificTypes.basisPoints
     }

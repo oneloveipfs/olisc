@@ -16,7 +16,8 @@ let specificTypes = {
             return false
         return true
     },
-    basisPoints: hive.specificTypes.basisPoints
+    basisPoints: hive.specificTypes.basisPoints,
+    username: hive.specificTypes.username,
 }
 
 // some supported operations to validate

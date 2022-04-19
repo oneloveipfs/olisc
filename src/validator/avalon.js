@@ -1,7 +1,20 @@
 const general = require('./general')
 
 let specificTypes = {
-    authorTipPercent: (val) => general.positiveInteger(val) && val <= 100
+    authorTipPercent: (val) => general.positiveInteger(val) && val <= 100,
+    username: (val) => {
+        if (!general.string(val) || val.length < 1 || val.length > 50) return false
+        let allowedUsernameChars = 'abcdefghijklmnopqrstuvwxyz0123456789'
+        let allowedUsernameCharsOnlyMiddle = '-.'
+        val = val.toLowerCase()
+        for (let i = 0; i < val.length; i++) {
+            const c = val[i]
+            if (allowedUsernameChars.indexOf(c) === -1) 
+                if (allowedUsernameCharsOnlyMiddle.indexOf(c) === -1 || i === 0 || i === val.length-1)
+                    return false
+        }
+        return true
+    }
 }
 
 let operations = {
@@ -15,7 +28,7 @@ let operations = {
     },
     5: {
         link: general.string,
-        author: general.string,
+        author: specificTypes.username,
         vt: general.integer,
         tag: general.string
     },
@@ -30,7 +43,7 @@ let operations = {
     },
     19: {
         link: general.string,
-        author: general.string,
+        author: specificTypes.username,
         vt: general.integer,
         tag: general.string,
         tip: specificTypes.authorTipPercent
@@ -39,7 +52,7 @@ let operations = {
 
 module.exports = {
     validate: (op) => {
-        if (!general.json(op) || !general.positiveInteger(op.type) || !operations[op.type] || !general.json(op.data) || !general.string(op.sender))
+        if (!general.json(op) || !general.positiveInteger(op.type) || !operations[op.type] || !general.json(op.data) || !specificTypes.username(op.sender))
             return false
         for (let f in op.data)
             if (!operations[op.type][f] || !operations[op.type][f](op.data[f]))
