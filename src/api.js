@@ -41,7 +41,7 @@ let api = {
         {
             verb: 'put',
             method: '/edit',
-            fields: ['id','op','scheduled'],
+            fields: ['id','op','opNetwork','scheduled'],
             action: actions.edit
         },
         {

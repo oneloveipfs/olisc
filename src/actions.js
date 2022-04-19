@@ -1,7 +1,10 @@
 const mongo = require('./mongo')
+const validator = require('./validator')
 
 let actions = {
     new: async (user,network,operation,operationNetwork,scheduled) => {
+        if (!validator.validate(operationNetwork,operation))
+            return { error: 'operation validation failed' }
         let newDoc
         try {
             newDoc = await mongo.db.collection('operations').insertOne({
@@ -16,7 +19,9 @@ let actions = {
         }
         return { result: { id: newDoc.insertedId.toString() } }
     },
-    edit: async (user,network,id,updatedOperation,scheduled) => {
+    edit: async (user,network,id,updatedOperation,updatedOperationNetwork,scheduled) => {
+        if (!validator.validate(updatedOperationNetwork,updatedOperation))
+            return { error: 'updated operation validation failed' }
         let update = { $set: {}}
         if (updatedOperation)
             update.$set.operation = updatedOperation
