@@ -1,5 +1,6 @@
 let networkValidators = {
     avalon: require('./avalon'),
+    blurt: require('./blurt'),
     hive: require('./hive')
 }
 
