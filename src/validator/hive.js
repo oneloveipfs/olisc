@@ -26,7 +26,7 @@ let specificTypes = {
         return true
     },
     arrayOfUsernames: (val) => {
-        if (!generalValidator.arrayOfStrings(val))
+        if (!general.arrayOfStrings(val))
             return false
         for (let i in val)
             if (!specificTypes.username(val[i]))

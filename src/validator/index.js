@@ -1,3 +1,5 @@
+const general = require('./general')
+
 let networkValidators = {
     avalon: require('./avalon'),
     blurt: require('./blurt'),
@@ -9,5 +11,6 @@ module.exports = {
         if (!networkValidators[network])
             return false
         return networkValidators[network].validate(op)
-    }
+    },
+    general
 }

@@ -9,7 +9,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@blurtfoundation/blurtjs": "^1.0.0",
+    "@hiveio/hive-js": "^2.0.4",
     "body-parser": "^1.20.0",
+    "javalon": "^1.0.34",
     "mongodb": "^4.5.0"
   }
 }

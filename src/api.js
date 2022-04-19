@@ -1,6 +1,7 @@
 const Parser = require('body-parser')
 const mongo = require('./mongo')
 const actions = require('./actions')
+const runner = require('./runner')
 const config = require('./config')
 
 let api = {
@@ -10,6 +11,7 @@ let api = {
     init: async (app, appConfig = {}, mongoClientDb = null, authenticator = null) => {
         config.init(appConfig)
         await mongo.init(mongoClientDb)
+        runner.init()
 
         if (typeof authenticator === 'function')
             api.authenticator = authenticator
