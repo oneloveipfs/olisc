@@ -14,14 +14,14 @@ let specificTypes = {
             return false
         return true
     },
-    basisPoints: (val) => general.integer(val) && val <= 10000,
+    basisPoints: (val) => general.integer(val) && val <= 10000 && val >= -10000,
     basisPointsOnlyPositive: (val) => general.positiveInteger(val) && val <= 10000,
     username: (val) => {
         if (!general.string(val) || val.length < 3 || val.length > 16)
             return false
         let ref = val.split(".")
-        for (let i = 0, len = ref.length; i < len; i++)
-            if (!/^[a-z]/.test(ref[i]) || !/^[a-z0-9-]*$/.test(ref[i]) || !/--/.test(ref[i]) || !/[a-z0-9]$/.test(ref[i]) || ref[i].length < 3)
+        for (let i = 0; i < ref.length; i++)
+            if (!/^[a-z]/.test(ref[i]) || !/^[a-z0-9-]*$/.test(ref[i]) || /--/.test(ref[i]) || !/[a-z0-9]$/.test(ref[i]) || ref[i].length < 3)
                 return false
         return true
     },
