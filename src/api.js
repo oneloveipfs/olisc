@@ -61,7 +61,7 @@ let api = {
         {
             verb: 'get',
             method: '/list',
-            fields: [],
+            fields: ['filter'],
             action: actions.list
         }
     ]

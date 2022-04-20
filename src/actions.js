@@ -81,10 +81,26 @@ let actions = {
             return { error: 'operation isn\'t yours to look at' }
         return { result: result }
     },
-    list: async (user,network) => {
+    list: async (user,network,filter) => {
+        let query = [
+            { user: user },
+            { network: network }
+        ]
         let result
+        if (filter && typeof filter.status === 'string') {
+            if (filter.status === 'pending') {
+                query.push({ error: { $exists: false }})
+                query.push({ tx: { $exists: false }})
+            } else if (filter.status === 'success') {
+                query.push({ tx: { $exists: true }})
+                query.push({ error: { $exists: false }})
+            } else if (filter.status === 'errored')
+                query.push({ error: { $exists: true }})
+        }
+        if (filter && typeof filter.opNetwork === 'string')
+            query.push({ operationNetwork: filter.opNetwork })
         try {
-            result = await mongo.db.collection('operations').find({ $and: [{ user: user }, { network: network }] }).toArray()
+            result = await mongo.db.collection('operations').find({ $and: query }).toArray()
         } catch (e) {
             return { error: e.toString() }
         }
