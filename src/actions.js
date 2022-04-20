@@ -3,6 +3,8 @@ const validator = require('./validator')
 
 let actions = {
     new: async (user,network,operation,operationNetwork,scheduled) => {
+        if (!operationNetwork)
+            return { error: 'opNetwork is required' }
         if (!validator.validate(operationNetwork,operation))
             return { error: 'operation validation failed' }
         else if (!validator.general.positiveInteger(scheduled) || scheduled < new Date().getTime())
