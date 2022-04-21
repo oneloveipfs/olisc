@@ -77,6 +77,8 @@ let actions = {
         } catch (e) {
             return { error: e.toString() }
         }
+        if (!result)
+            return { error: 'operation not found', status: 404 }
         if (result.user !== user || result.network !== network)
             return { error: 'operation isn\'t yours to look at' }
         return { result: result }

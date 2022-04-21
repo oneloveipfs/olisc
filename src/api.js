@@ -27,7 +27,7 @@ let api = {
                 api.methods[mi].fields.forEach(field => args.push(req.body[field]))
                 let action = await api.methods[mi].action(auth.user,auth.network,...args)
                 if (action.error)
-                    return res.status(500).send({error: action.error})
+                    return res.status(action.status || 500).send({error: action.error})
                 else
                     return res.send(action.result)
             })
