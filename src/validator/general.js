@@ -1,5 +1,6 @@
 // General data types
 let generalValidator = {
+    optional: (validator) => (val) => typeof val === 'undefined' || validator(val),
     string: (val) => typeof val === 'string',
     bool: (val) => typeof val === 'boolean',
     integer: (val) => Number.isInteger(val) && Number.isSafeInteger(val) && val >= Number.MIN_SAFE_INTEGER && val <= Number.MAX_SAFE_INTEGER,

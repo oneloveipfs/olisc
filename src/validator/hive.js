@@ -41,6 +41,7 @@ let operations = {
     comment: {
         parent_author: general.string,
         parent_permlink: general.string,
+        category: general.optional(general.string),
         author: specificTypes.username,
         permlink: general.string,
         title: general.string,
