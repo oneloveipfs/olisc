@@ -35,6 +35,12 @@ let api = {
     },
     methods: [
         {
+            verb: 'get',
+            method: '/',
+            fields: [],
+            action: actions.index
+        },
+        {
             verb: 'post',
             method: '/new',
             fields: ['op','opNetwork','scheduled'],

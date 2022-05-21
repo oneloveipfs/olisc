@@ -2,6 +2,12 @@ const mongo = require('./mongo')
 const validator = require('./validator')
 
 let actions = {
+    index: async () => {
+        return { result: {
+            ok: 1,
+            count: await mongo.db.collection('operations').estimatedDocumentCount()
+        }}
+    },
     new: async (user,network,operation,operationNetwork,scheduled) => {
         if (!operationNetwork)
             return { error: 'opNetwork is required' }
