@@ -58,8 +58,8 @@ let operations = {
         extensions: general.array
     },
     custom_json: {
-        required_auths: specificTypes.arrayOfUsernames,
-        required_posting_auths: specificTypes.arrayOfUsernames,
+        required_auths: general.singleItemArray(specificTypes.arrayOfUsernames),
+        required_posting_auths: general.singleItemArray(specificTypes.arrayOfUsernames),
         id: general.string,
         json: general.jsonString
     },
@@ -72,7 +72,7 @@ let operations = {
 }
 
 module.exports = {
-    validate: (ops) => graphene.validate(operations,ops),
+    validate: (ops,user,network) => graphene.validate('hive',operations,ops,user,network),
     specificTypes,
     operations
 }

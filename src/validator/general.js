@@ -16,6 +16,7 @@ let generalValidator = {
                 return false
         return true
     },
+    singleItemArray: (arrayValidator) => (val) => arrayValidator(val) && val.length <= 1,
     json: (val) => typeof val === 'object',
     nonArrayJson: (val) => generalValidator.json(val) && !generalValidator.array(val),
     jsonString: (val) => {

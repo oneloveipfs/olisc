@@ -42,5 +42,5 @@ let operations = {
 }
 
 module.exports = {
-    validate: (ops) => graphene.validate(operations,ops)
+    validate: (ops,user,network) => graphene.validate('blurt',operations,ops,user,network)
 }

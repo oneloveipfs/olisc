@@ -7,10 +7,10 @@ let networkValidators = {
 }
 
 module.exports = {
-    validate: (network,op) => {
+    validate: (network,op,user,net) => {
         if (!networkValidators[network])
             return false
-        return networkValidators[network].validate(op)
+        return networkValidators[network].validate(op,user,net)
     },
     general
 }

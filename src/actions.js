@@ -11,7 +11,7 @@ let actions = {
     new: async (user,network,operation,operationNetwork,scheduled) => {
         if (!operationNetwork)
             return { error: 'opNetwork is required' }
-        if (!validator.validate(operationNetwork,operation))
+        if (!validator.validate(operationNetwork,operation,user,network))
             return { error: 'operation validation failed' }
         else if (!validator.general.positiveInteger(scheduled) || scheduled < new Date().getTime())
             return { error: 'scheduled timestamp must be in the future' }
@@ -30,7 +30,7 @@ let actions = {
         return { result: { id: newDoc.insertedId.toString() } }
     },
     edit: async (user,network,id,updatedOperation,updatedOperationNetwork,scheduled) => {
-        if (!validator.validate(updatedOperationNetwork,updatedOperation))
+        if (!validator.validate(updatedOperationNetwork,updatedOperation,user,network))
             return { error: 'updated operation validation failed' }
         else if (!validator.general.positiveInteger(scheduled) || scheduled < new Date().getTime())
             return { error: 'scheduled timestamp must be in the future' }

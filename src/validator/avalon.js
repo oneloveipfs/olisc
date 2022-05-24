@@ -51,8 +51,10 @@ let operations = {
 }
 
 module.exports = {
-    validate: (op) => {
+    validate: (op,user,network) => {
         if (!general.json(op) || !general.positiveInteger(op.type) || !operations[op.type] || !general.json(op.data) || !specificTypes.username(op.sender))
+            return false
+        if (op.sender !== user || (network !== 'dtc' && network !== 'all'))
             return false
         for (let f in op.data)
             if (!operations[op.type][f] || !operations[op.type][f](op.data[f]))
