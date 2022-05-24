@@ -24,7 +24,7 @@ let api = {
                     return res.status(403).send({error: auth.error})
 
                 let args = []
-                api.methods[mi].fields.forEach(field => args.push(req.body[field]))
+                api.methods[mi].fields.forEach(field => args.push(api.methods[mi].verb === 'get' ? req.params[field] : req.body[field]))
                 let action = await api.methods[mi].action(auth.user,auth.network,...args)
                 if (action.error)
                     return res.status(action.status || 500).send({error: action.error})
@@ -60,12 +60,12 @@ let api = {
         },
         {
             verb: 'get',
-            method: '/get',
+            method: '/get/:id',
             fields: ['id'],
             action: actions.get
         },
         {
-            verb: 'get',
+            verb: 'post',
             method: '/list',
             fields: ['filter'],
             action: actions.list
