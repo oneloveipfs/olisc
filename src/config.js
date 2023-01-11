@@ -7,6 +7,9 @@ let config = {
         mongodbName: 'olisc',
         apiNamespace: '/olisc',
         runInterval: 300000,
+        avalon: {
+            type13: false
+        },
         rpcs: {},
         wifs: {}
     }

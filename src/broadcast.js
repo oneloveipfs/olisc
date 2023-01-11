@@ -40,6 +40,12 @@ let broadcast = {
         return new Promise((rs,rj) => {
             if (!config.wifs.avalon)
                 return rj('No Wif')
+            delete operation.ts
+            // some services may not want to have access to user funds
+            if (config.avalon && !config.avalon.type13 && operation.type === 13) {
+                operation.type = 4
+                delete operation.data.burn
+            }
             avalon.sendRawTransaction(avalon.signMultisig([config.wifs.avalon],operation.sender,operation),(e) => {
                 if (e)
                     rj(e.error)
